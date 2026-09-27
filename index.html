@@ -9,28 +9,31 @@
 </head>
 
 <body class="bg-slate-100">
-  <div class="bg-white max-w-md mx-auto rounded-lg">
+  <div class="max-w-xl mx-auto my-10 bg-white rounded-2xl shadow-lg overflow-hidden">
 
-    <div class="bg-indigo-500 p-5 text-white">
-      <h1>Todo App</h1>
+    <div class="text-white bg-indigo-600 px-8 py-6">
+      <h1 class="text-3xl font-bold text-white tracking-wide">Todo App</h1>
     </div>
 
     <div class="p-5">
       <form id="todo-form" action="" class="flex gap-5">
 
-        <input id="todo-input" placeholder="Enter task description..." type="text" class="border border-black flex-1 p-2">
+        <input id="todo-input" placeholder="What needs to be done ?" type="text" class="border border-slate-800 flex-1 p-2 focus:border-indigo-500
+        rounded-md outline-none focus:ring-indigo-500">
 
-        <button id="form-btn" class="px-5 text-white py-3 bg-indigo-500">Add</button>
+        <button id="form-btn" class="px-7 text-white py-4 bg-indigo-600 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide">Add</button>
 
       </form>
 
 <div class="flex justify-between pt-6 pb-1 text-xs border-b border-black">
-<p>TASKS (1)</p>
-<p>COMPLETED : 1</p>
+<p id="task-count" class="font-bold uppercase tracking-wide">TASKS (0)</p>
+<p id="complete-count" class="font-bold uppercase tracking-wide">COMPLETED : 0</p>
 
 </div>
 
-
+<p id="empty-todo" class=" mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-300 font-semibold">
+  No tasks yet! <span class="text-gray-400 font-semibold">Add a task</span> to get started.
+</p>
 
 <ul class="py-5 flex flex-col gap-3" id="todo-list">
 <!-- <li data-id="1" class="flex gap-2 border border-slate-300 p-4 rounded-xl">
@@ -41,7 +44,6 @@
     <button data-id="1">Delete</button>
   </div>
 </li> -->
-
 </ul>
 
   </div>
