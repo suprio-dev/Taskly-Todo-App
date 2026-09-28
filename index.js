@@ -7,9 +7,11 @@ const formBtn = document.querySelector("#form-btn");
 const taskCount = document.querySelector("#task-count");
 const completeCount = document.querySelector("#complete-count");
 const emptyTodo = document.querySelector("#empty-todo");
+const cancelEdit = document.querySelector("#cancel-edit");
 
 
 let editTodoId = null;
+cancelEdit.className = "hidden";
 
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -22,6 +24,7 @@ todoForm.addEventListener("submit", (e) => {
 
 
   // EDITING
+
   if (editTodoId !== null) {
 
     todos = todos.map((todo) => {
@@ -39,7 +42,8 @@ todoForm.addEventListener("submit", (e) => {
     editTodoId = null;
     formBtn.textContent = "Add";
     todoInput.value = "";
-    formBtn.className = "px-7 text-white py-4 bg-indigo-600 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide"
+    formBtn.className = "px-7 text-white py-4 bg-indigo-600 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
+    cancelEdit.className = "hidden";
     renderTodo();
   }
 
@@ -53,10 +57,10 @@ todoForm.addEventListener("submit", (e) => {
     };
 
     todos.push(newTodo);
-if(todos.length !== 0)
-  emptyTodo.classList.add("hidden");
-else
-  emptyTodo.classList.remove("hidden");
+    if (todos.length !== 0)
+      emptyTodo.classList.add("hidden");
+    else
+      emptyTodo.classList.remove("hidden");
 
     todoInput.value = "";
 
@@ -81,13 +85,20 @@ function addTodo(todo) {
   li.dataset.id = todo.id;
 
   li.className =
-    `flex gap-2 border border-slate-300 p-4 rounded-xl`;
+    `flex gap-2 border border-slate-300 p-4 rounded-xl hover:translate-y-1 transition-all duration-200`;
   li.innerHTML = `
-    <input 
-      type="checkbox" 
-      data-id="${todo.id}"${todo.isCompleted === true ? "checked" : ""}>
+    <div class="flex items-center gap-3 flex-1">
+  <input
+    type="checkbox"
+    data-id="${todo.id}"
+    ${todo.isCompleted === true ? "checked" : ""}
+    class="appearance-none w-3 h-3 shrink-0 border-2 border-gray-300 rounded-full checked:bg-indigo-500 checked:border-indigo-500 focus:outline-none transition-all duration-200"
+  >
 
-    <p class="flex-1 ${todo.isCompleted === true ? "line-through text-slate-600 opacity-60" : ""}">${todo.text}</p>
+  <p class="flex-1 ${todo.isCompleted === true ? "line-through text-slate-600 opacity-60" : ""}">
+    ${todo.text}
+  </p>
+</div>
 
     <div class="flex gap-2">
       <button data-action="edit" data-id="${todo.id}" class="bg-amber-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-3s active:translate-y-1 active:shadow-sm tracking-wide">
@@ -98,8 +109,7 @@ function addTodo(todo) {
        font-semibold transition-all duration-3s active:translate-y-1 active:shadow-sm tracking-wide">
         Delete
       </button>
-    </div>
-  `;
+    </div>`;
 
   todoList.append(li);
 
@@ -137,10 +147,23 @@ todoList.addEventListener("click", (e) => {
       todo => todo.id === Number(id)
     );
 
+    let originalTodoValue = todoInput.value;
     todoInput.value = currentTodo.text;
 
     formBtn.textContent = "Update";
-    formBtn.className = "bg-orange-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-3s active:translate-y-1 active:shadow-sm tracking-wide"
+    cancelEdit.className = "text-sm text-gray-500 mt-2 transition-all duration-300 active:translate-y-1 font-medium";
+    cancelEdit.classList.remove("hidden");
+    formBtn.className = "bg-orange-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-3s active:translate-y-1 active:shadow-sm tracking-wide";
+    cancelEdit.addEventListener("click", (e) => {
+      if (e.target.tagName === "BUTTON")
+        todoInput.value = originalTodoValue;
+      cancelEdit.classList.add("hidden");
+      formBtn.textContent = "Add";
+      todoInput.value = "";
+      formBtn.className = "px-7 text-white py-4 bg-indigo-600 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
+
+    })
+
   }
 
 
@@ -178,10 +201,12 @@ function deleteTodo(id) {
     todo => todo.id !== Number(id)
   );
 
-if(todos.length !== 0)
-  emptyTodo.classList.add("hidden");
-else
-  emptyTodo.classList.remove("hidden");
+  if (todos.length !== 0)
+    emptyTodo.classList.add("hidden");
+  else
+    emptyTodo.classList.remove("hidden");
+  taskCount.textContent = `TASKS (0)`
+  completeCount.textContent = `COMPLETED : 0`
 
 
   renderTodo();

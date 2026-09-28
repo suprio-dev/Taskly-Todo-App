@@ -8,35 +8,43 @@
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body class="bg-slate-100">
-  <div class="max-w-xl mx-auto my-10 bg-white rounded-2xl shadow-lg overflow-hidden">
+<body class="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-300 to-purple-100">
+  <div class="max-w-xl mx-auto my-10 bg-white overflow-hidden bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl">
 
-    <div class="text-white bg-indigo-600 px-8 py-6">
-      <h1 class="text-3xl font-bold text-white tracking-wide">Todo App</h1>
+    <div class="text-white bg-purple-600 px-8 py-6">
+      <h1 class="text-3xl font-bold text-white tracking-wide">To-do List</h1>
     </div>
 
     <div class="p-5">
       <form id="todo-form" action="" class="flex gap-5">
 
-        <input id="todo-input" placeholder="What needs to be done ?" type="text" class="border border-slate-800 flex-1 p-2 focus:border-indigo-500
+        <input id="todo-input" placeholder="👋What’s on your mind today..." type="text" class="border border-slate-800 flex-1 p-2 focus:border-indigo-500
         rounded-md outline-none focus:ring-indigo-500">
 
-        <button id="form-btn" class="px-7 text-white py-4 bg-indigo-600 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide">Add</button>
+        <div class="flex flex-col">
+          <button id="form-btn"
+            class="px-7 text-white py-4 bg-emerald-500 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide">Add</button>
+          <button id="cancel-edit">Cancel Edit</button>
+        </div>
 
       </form>
 
-<div class="flex justify-between pt-6 pb-1 text-xs border-b border-black">
-<p id="task-count" class="font-bold uppercase tracking-wide">TASKS (0)</p>
-<p id="complete-count" class="font-bold uppercase tracking-wide">COMPLETED : 0</p>
+      <div class="flex justify-between pt-6 pb-1 text-xs border-b border-black">
+        <p id="task-count"
+          class="font-bold uppercase tracking-wide text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">TASKS (0)</p>
+        <p id="complete-count"
+          class="font-bold uppercase tracking-wide text text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">COMPLETED
+          : 0</p>
 
-</div>
+      </div>
 
-<p id="empty-todo" class=" mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-300 font-semibold">
-  No tasks yet! <span class="text-gray-400 font-semibold">Add a task</span> to get started.
-</p>
+      <p id="empty-todo"
+        class=" mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-400 font-semibold">
+        No tasks yet 😅 <span class="text-gray-400 font-semibold"> Add a task</span> to get started...
+      </p>
 
-<ul class="py-5 flex flex-col gap-3" id="todo-list">
-<!-- <li data-id="1" class="flex gap-2 border border-slate-300 p-4 rounded-xl">
+      <ul class="py-5 flex flex-col gap-3" id="todo-list">
+        <!-- <li data-id="1" class="flex gap-2 border border-slate-300 p-4 rounded-xl">
   <input type="checkbox" data-id="1">
   <p class="flex-1">go to gym</p>
   <div class="flex gap-2">
@@ -44,11 +52,11 @@
     <button data-id="1">Delete</button>
   </div>
 </li> -->
-</ul>
+      </ul>
+
+    </div>
 
   </div>
-
- </div>
 
   <script src="index.js"></script>
 </body>
