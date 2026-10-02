@@ -154,17 +154,24 @@ todoList.addEventListener("click", (e) => {
     cancelEdit.className = "text-sm text-gray-500 mt-2 transition-all duration-300 active:translate-y-1 font-medium";
     cancelEdit.classList.remove("hidden");
     formBtn.className = "bg-orange-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-3s active:translate-y-1 active:shadow-sm tracking-wide";
-    cancelEdit.addEventListener("click", (e) => {
+    
+  }
+
+//CANCEL EDIT
+
+cancelEdit.addEventListener("click", (e) => {
       if (e.target.tagName === "BUTTON")
-        todoInput.value = originalTodoValue;
+        CANCEL();
+    })
+
+function CANCEL(){
+  todoInput.value = originalTodoValue;
       cancelEdit.classList.add("hidden");
       formBtn.textContent = "Add";
       todoInput.value = "";
       formBtn.className = "px-7 text-white py-4 bg-indigo-600 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
 
-    })
-
-  }
+}
 
 
   // DELETE
