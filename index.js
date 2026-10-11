@@ -1,4 +1,4 @@
-let todos = [];
+let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
 const todoForm = document.querySelector("#todo-form");
 const todoInput = document.querySelector("#todo-input");
@@ -42,7 +42,7 @@ todoForm.addEventListener("submit", (e) => {
     editTodoId = null;
     formBtn.textContent = "Add";
     todoInput.value = "";
-    formBtn.className = "px-7 text-white py-4 bg-indigo-600 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
+    formBtn.className = "px-7 text-white py-4 bg-emerald-500 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
     cancelEdit.className = "hidden";
     renderTodo();
   }
@@ -71,7 +71,12 @@ todoForm.addEventListener("submit", (e) => {
 
 function renderTodo() {
   todoList.innerHTML = "";
-
+if(todos.length!=0)
+  emptyTodo.className="hidden";
+else if(todos.length===0){
+  emptyTodo.className="mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-400 font-semibold";
+  emptyTodo.innerHTML=`No tasks yet 😅 <span class="text-gray-400 font-semibold"> Add a task</span> to get started...`;
+}
   todos.forEach(function (todo) {
     addTodo(todo);
   });
@@ -112,7 +117,7 @@ function addTodo(todo) {
     </div>`;
 
   todoList.append(li);
-
+  localStorage.setItem("todos", JSON.stringify(todos));
   taskCount.textContent = `TASKS (${todos.length})`
   completeCount.textContent = `COMPLETED : ${todos.filter((todo) => todo.isCompleted).length}`
 
@@ -154,24 +159,24 @@ todoList.addEventListener("click", (e) => {
     cancelEdit.className = "text-sm text-gray-500 mt-2 transition-all duration-300 active:translate-y-1 font-medium";
     cancelEdit.classList.remove("hidden");
     formBtn.className = "bg-orange-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-3s active:translate-y-1 active:shadow-sm tracking-wide";
-    
+    localStorage.setItem("todos", JSON.stringify(todos));
   }
 
-//CANCEL EDIT
+  //CANCEL EDIT
 
-cancelEdit.addEventListener("click", (e) => {
-      if (e.target.tagName === "BUTTON")
-        CANCEL();
-    })
+  cancelEdit.addEventListener("click", (e) => {
+    if (e.target.tagName === "BUTTON")
+      CANCEL();
+  })
 
-function CANCEL(){
-  todoInput.value = originalTodoValue;
-      cancelEdit.classList.add("hidden");
-      formBtn.textContent = "Add";
-      todoInput.value = "";
-      formBtn.className = "px-7 text-white py-4 bg-indigo-600 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
-
-}
+  function CANCEL() {
+    todoInput.value = originalTodoValue;
+    cancelEdit.classList.add("hidden");
+    formBtn.textContent = "Add";
+    todoInput.value = "";
+    formBtn.className = "px-7 text-white py-4 bg-emerald-500 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
 
 
   // DELETE
@@ -180,6 +185,7 @@ function CANCEL(){
     console.log("deleting...");
 
     deleteTodo(id);
+
   }
 
 
@@ -197,6 +203,7 @@ function CANCEL(){
 
       return todo;
     });
+    localStorage.setItem("todos", JSON.stringify(todos));
     renderTodo()
   }
 });
@@ -215,6 +222,7 @@ function deleteTodo(id) {
   taskCount.textContent = `TASKS (0)`
   completeCount.textContent = `COMPLETED : 0`
 
-
+  localStorage.setItem("todos", JSON.stringify(todos));
   renderTodo();
+
 }
