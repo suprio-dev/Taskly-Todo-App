@@ -8,6 +8,9 @@ const taskCount = document.querySelector("#task-count");
 const completeCount = document.querySelector("#complete-count");
 const emptyTodo = document.querySelector("#empty-todo");
 const cancelEdit = document.querySelector("#cancel-edit");
+const progressText = document.querySelector("#progress-text");
+const progressBar = document.querySelector("#progress-bar");
+const progressMessage = document.querySelector("#progress-message");
 
 
 let editTodoId = null;
@@ -45,6 +48,7 @@ todoForm.addEventListener("submit", (e) => {
     formBtn.className = "px-7 text-white py-4 bg-emerald-500 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
     cancelEdit.className = "hidden";
     renderTodo();
+    taskCompletionBar();
   }
 
   // ADDING
@@ -65,18 +69,19 @@ todoForm.addEventListener("submit", (e) => {
     todoInput.value = "";
 
     renderTodo();
+    taskCompletionBar();
   }
 });
 
 
 function renderTodo() {
   todoList.innerHTML = "";
-if(todos.length!=0)
-  emptyTodo.className="hidden";
-else if(todos.length===0){
-  emptyTodo.className="mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-400 font-semibold";
-  emptyTodo.innerHTML=`No tasks yet 😅 <span class="text-gray-400 font-semibold"> Add a task</span> to get started...`;
-}
+  if (todos.length != 0)
+    emptyTodo.className = "hidden";
+  else if (todos.length === 0) {
+    emptyTodo.className = "mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-400 font-semibold";
+    emptyTodo.innerHTML = `No tasks yet 😅 <span class="text-gray-400 font-semibold"> Add a task</span> to get started...`;
+  }
   todos.forEach(function (todo) {
     addTodo(todo);
   });
@@ -127,7 +132,7 @@ function addTodo(todo) {
 
 
 renderTodo();
-
+taskCompletionBar();
 
 todoList.addEventListener("click", (e) => {
 
@@ -167,6 +172,7 @@ todoList.addEventListener("click", (e) => {
   cancelEdit.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON")
       CANCEL();
+    taskCompletionBar();
   })
 
   function CANCEL() {
@@ -204,7 +210,8 @@ todoList.addEventListener("click", (e) => {
       return todo;
     });
     localStorage.setItem("todos", JSON.stringify(todos));
-    renderTodo()
+    renderTodo();
+    taskCompletionBar();
   }
 });
 
@@ -224,5 +231,31 @@ function deleteTodo(id) {
 
   localStorage.setItem("todos", JSON.stringify(todos));
   renderTodo();
+  taskCompletionBar();
+  console.log(todos);
+}
+
+
+function taskCompletionBar() {
+  if (todos.length === 0) {
+    progressText.textContent = `0.0%`;
+    progressBar.style.width = `0%`;
+    progressMessage.textContent = `Let's get started! Complete your first task ✨`;
+  } else {
+    let counter = 0;
+    for (let i = 0; i < todos.length; i++) {
+      if (todos[i].isCompleted === true) {
+        counter++;
+      }
+    }
+    progressText.textContent = `${(counter / (todos.length) * 100).toFixed(1)}%`;
+    progressBar.style.width = `${counter / (todos.length) * 100}%`;
+    if (todos.length - counter === 0)
+      progressMessage.textContent = `All tasks completed ✨`;
+    else if (todos.length - counter === 1)
+      progressMessage.textContent = `${todos.length - counter} task still left`;
+    else
+      progressMessage.textContent = `${todos.length - counter} tasks pending`;
+  }
 
 }

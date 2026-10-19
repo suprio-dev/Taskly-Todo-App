@@ -38,6 +38,30 @@
 
       </div>
 
+      <!-- Task Completion Progress -->
+      <div class="mt-5 mb-2">
+        <div class="flex items-center justify-between mb-2">
+          <p class="text-sm font-semibold text-purple-600">
+            Task Progress
+          </p>
+          <p id="progress-text" class="text-sm font-bold text-purple-600">
+            0%
+          </p>
+        </div>
+
+        <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner" role="progressbar"
+          aria-label="Task completion progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+          id="progress-bar-container">
+          <div id="progress-bar"
+            class="h-full w-0 bg-gradient-to-r from-emerald-400 to-green-600 rounded-full transition-all duration-500 ease-out">
+          </div>
+        </div>
+
+        <p id="progress-message" class="text-xs text-slate-500 mt-2">
+          Let's get started! Complete your first task ✨
+        </p>
+      </div>
+
       <p id="empty-todo"
         class=" mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-400 font-semibold">
         No tasks yet 😅 <span class="text-gray-400 font-semibold"> Add a task</span> to get started...
