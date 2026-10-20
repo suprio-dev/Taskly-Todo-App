@@ -11,7 +11,7 @@ const cancelEdit = document.querySelector("#cancel-edit");
 const progressText = document.querySelector("#progress-text");
 const progressBar = document.querySelector("#progress-bar");
 const progressMessage = document.querySelector("#progress-message");
-
+let hours, minutes, am_pm;
 
 let editTodoId = null;
 cancelEdit.className = "hidden";
@@ -54,10 +54,62 @@ todoForm.addEventListener("submit", (e) => {
   // ADDING
   else {
 
+
+    let date = new Date();
+    if (date.getHours() >= 0 && date.getHours() <= 9)
+      hours = "0" + date.getHours();
+    else
+      hours = date.getHours();
+
+
+    if (date.getHours() >= 12) {
+      if (date.getHours() - 12 > 0 && date.getHours() - 12 <= 9)
+        hours = "0" + (date.getHours() - 12);
+      else if (date.getHours() - 12 === 0)
+        hours = date.getHours();
+      else
+        hours = date.getHours() - 12;
+      am_pm = "PM";
+    }
+
+    else {
+      if (date.getHours() === 0)
+        hours = date.getHours() + 12;
+      am_pm = "AM";
+    }
+
+
+
+    if (date.getMinutes() >= 0 && date.getMinutes() <= 9)
+      minutes = "0" + date.getMinutes();
+    else
+      minutes = date.getMinutes();
+
+
+    let current_date = date.getDate();
+    let months = [
+      "Jan", "Feb", "Mar", "Apr",
+      "May", "Jun", "Jul", "Aug",
+      "Sep", "Oct", "Nov", "Dec"
+    ];
+    let current_month = months[date.getMonth()];
+    let days = [
+      "Sun", "Mon", "Tue", "Wed",
+      "Thu", "Fri", "Sat"
+    ];
+    let current_day = days[date.getDay()];
+    let current_year = date.getFullYear();
     let newTodo = {
       id: Date.now(),
       text: todoValue,
-      isCompleted: false
+      isCompleted: false,
+      hours: hours,
+      minutes: minutes,
+      current_date: current_date,
+      current_month: current_month,
+      current_day: current_day,
+      current_year: current_year,
+      am_pm:am_pm
     };
 
     todos.push(newTodo);
@@ -98,30 +150,47 @@ function addTodo(todo) {
 
   li.className =
     `flex gap-2 border border-slate-300 p-4 rounded-xl hover:translate-y-1 transition-all duration-200`;
+
+
+
+
   li.innerHTML = `
-    <div class="flex items-center gap-3 flex-1">
-  <input
-    type="checkbox"
-    data-id="${todo.id}"
-    ${todo.isCompleted === true ? "checked" : ""}
-    class="appearance-none w-3 h-3 shrink-0 border-2 border-gray-300 rounded-full checked:bg-indigo-500 checked:border-indigo-500 focus:outline-none transition-all duration-200"
-  >
+  <div class="flex items-center gap-3 flex-1">
+    <input
+      type="checkbox"
+      data-id="${todo.id}"
+      ${todo.isCompleted === true ? "checked" : ""}
+      class="appearance-none w-3 h-3 shrink-0 border-2 border-gray-300 rounded-full checked:bg-indigo-500 checked:border-indigo-500 focus:outline-none transition-all duration-200"
+    >
 
-  <p class="flex-1 ${todo.isCompleted === true ? "line-through text-slate-600 opacity-60" : ""}">
-    ${todo.text}
-  </p>
-</div>
+    <div class="flex-1 min-w-0">
+      <p class="${todo.isCompleted === true ? "line-through text-slate-600 opacity-60 font-semibold" : ""}">
+        ${todo.text}
+      </p>
 
-    <div class="flex gap-2">
-      <button data-action="edit" data-id="${todo.id}" class="bg-amber-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-3s active:translate-y-1 active:shadow-sm tracking-wide">
-        Edit
-      </button>
+      <span class="mt-1 flex items-center gap-1.5 text-xs font-medium text-slate-400">
+        <i class="fa-regular fa-calendar text-indigo-400"></i>
+        <span>${todo.current_day}, ${todo.current_date} ${todo.current_month} ${todo.current_year} · ${todo.hours}:${todo.minutes} ${todo.am_pm}</span>
+      </span>
+    </div>
+  </div>
 
-      <button data-action="delete" data-id="${todo.id}" class="bg-red-500 opacity-80 px-3 py-1.5 rounded-lg text-white
-       font-semibold transition-all duration-3s active:translate-y-1 active:shadow-sm tracking-wide">
-        Delete
-      </button>
-    </div>`;
+  <div class="flex gap-2">
+    <button
+      data-action="edit"
+      data-id="${todo.id}"
+      class="bg-amber-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-300 active:translate-y-1 active:shadow-sm tracking-wide">
+      Edit
+    </button>
+
+    <button
+      data-action="delete"
+      data-id="${todo.id}"
+      class="bg-red-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-300 active:translate-y-1 active:shadow-sm tracking-wide">
+      Delete
+    </button>
+  </div>
+`;
 
   todoList.append(li);
   localStorage.setItem("todos", JSON.stringify(todos));
