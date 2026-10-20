@@ -80,7 +80,9 @@ function renderTodo() {
     emptyTodo.className = "hidden";
   else if (todos.length === 0) {
     emptyTodo.className = "mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-400 font-semibold";
-    emptyTodo.innerHTML = `No tasks yet 😅 <span class="text-gray-400 font-semibold"> Add a task</span> to get started...`;
+    emptyTodo.innerHTML = `All clear for now! 🌱
+  <span class="font-semibold text-indigo-500">Add a task</span>
+  to get moving!`;
   }
   todos.forEach(function (todo) {
     addTodo(todo);
@@ -253,7 +255,7 @@ function taskCompletionBar() {
     if (todos.length - counter === 0)
       progressMessage.textContent = `All tasks completed ✨`;
     else if (todos.length - counter === 1)
-      progressMessage.textContent = `${todos.length - counter} task still left`;
+      progressMessage.textContent = `${todos.length - counter} task left`;
     else
       progressMessage.textContent = `${todos.length - counter} tasks pending`;
   }

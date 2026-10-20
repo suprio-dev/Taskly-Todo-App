@@ -4,54 +4,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Taskly</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Styles for the <li> items your JS creates. Pure CSS, no JS changes needed -->
+  <style>
+    body { font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
+
+    #todo-list > li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      box-shadow: 0 1px 2px rgb(15 23 42 / 0.04);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    #todo-list > li:hover {
+      transform: translateY(-2px);
+      border-color: #c7d2fe;
+      box-shadow: 0 8px 20px -8px rgb(79 70 229 / 0.25);
+    }
+    #todo-list input[type="checkbox"] {
+      width: 1.25rem;
+      height: 1.25rem;
+      accent-color: #7c3aed;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    #todo-list > li p { color: #1e293b; font-weight: 500; word-break: break-word; }
+    #todo-list > li:has(input:checked) { background: #f8fafc; }
+    #todo-list > li:has(input:checked) p { color: #94a3b8; text-decoration: line-through; }
+
+    #todo-list li button {
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.8rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: background-color .15s ease, color .15s ease;
+    }
+    #todo-list li button:first-of-type { color: #4f46e5; background: #eef2ff; }
+    #todo-list li button:first-of-type:hover { background: #e0e7ff; }
+    #todo-list li button:last-of-type { color: #e11d48; background: #fff1f2; }
+    #todo-list li button:last-of-type:hover { background: #ffe4e6; }
+
+    button:focus-visible, input:focus-visible { outline: 2px solid #7c3aed; outline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-300 to-purple-100">
-  <div class="max-w-xl mx-auto my-10 bg-white overflow-hidden bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl">
+<body class="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-200 to-purple-200 px-4 text-slate-800">
+  <div class="max-w-xl mx-auto my-10 overflow-hidden bg-white/85 backdrop-blur-md rounded-3xl shadow-2xl shadow-indigo-900/10 ring-1 ring-white/60">
 
-    <div class="text-white bg-purple-600 px-8 py-6">
-      <h1 class="text-3xl font-bold text-white tracking-wider text-center">Taskly</h1>
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 px-8 py-8">
+      <h1 class="text-4xl font-extrabold text-white tracking-tight text-center">Taskly</h1>
+      <p class="text-center text-indigo-100 text-sm mt-1">Plan it. Do it. Tick it off.</p>
     </div>
 
-    <div class="p-5">
-      <form id="todo-form" action="" class="flex gap-5">
+    <div class="p-6">
 
-        <input id="todo-input" placeholder="👋What’s on your mind today..." type="text" class="border border-slate-800 flex-1 p-2 focus:border-indigo-500
-        rounded-md outline-none focus:ring-indigo-500">
+      <!-- Add / edit form -->
+      <form id="todo-form" action="" class="flex gap-3 items-start">
 
-        <div class="flex flex-col">
+        <input id="todo-input" placeholder="👋 What’s on your mind today..." type="text"
+          class="flex-1 min-w-0 px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none">
+
+        <div class="flex flex-col gap-1.5">
           <button id="form-btn"
-            class="px-7 text-white py-4 bg-emerald-500 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide">Add</button>
-          <button id="cancel-edit">Cancel Edit</button>
+            class="px-6 py-3 text-white bg-emerald-500 hover:bg-emerald-600 rounded-xl font-semibold shadow-md shadow-emerald-500/30 transition-all duration-300 active:translate-y-0.5 active:shadow-sm cursor-pointer">Add</button>
+          <button id="cancel-edit"
+            class="text-xs font-semibold text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg px-2 py-1 transition cursor-pointer">Cancel Edit</button>
         </div>
 
       </form>
 
-      <div class="flex justify-between pt-6 pb-1 text-xs border-b border-black">
+      <!-- Counters -->
+      <div class="flex justify-between items-center pt-6 pb-3 text-xs border-b border-slate-200">
         <p id="task-count"
-          class="font-bold uppercase tracking-wide text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">TASKS (0)</p>
+          class="font-bold tracking-wide text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full">TASKS (0)</p>
         <p id="complete-count"
-          class="font-bold uppercase tracking-wide text text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">COMPLETED
-          : 0</p>
-
+          class="font-bold tracking-wide text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full">COMPLETED : 0</p>
       </div>
 
       <!-- Task Completion Progress -->
-      <div class="mt-5 mb-2">
+      <div class="mt-5 mb-2 p-4 rounded-2xl bg-purple-50/70 border border-purple-100">
         <div class="flex items-center justify-between mb-2">
-          <p class="text-sm font-semibold text-purple-600">
-            Task Progress
-          </p>
-          <p id="progress-text" class="text-sm font-bold text-purple-600">
-            0%
-          </p>
+          <p class="text-sm font-semibold text-purple-700">Task Progress</p>
+          <p id="progress-text" class="text-sm font-bold text-purple-700">0%</p>
         </div>
 
-        <div class="w-full h-3 bg-slate-200 rounded-full overflow-hidden shadow-inner" role="progressbar"
-          aria-label="Task completion progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
-          id="progress-bar-container">
+        <div class="w-full h-3 bg-white rounded-full overflow-hidden shadow-inner ring-1 ring-purple-100"
+          role="progressbar" aria-label="Task completion progress" aria-valuemin="0" aria-valuemax="100"
+          aria-valuenow="0" id="progress-bar-container">
           <div id="progress-bar"
             class="h-full w-0 bg-gradient-to-r from-emerald-400 to-green-600 rounded-full transition-all duration-500 ease-out">
           </div>
@@ -62,11 +117,15 @@
         </p>
       </div>
 
+      <!-- Empty state -->
       <p id="empty-todo"
-        class=" mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-400 font-semibold">
-        No tasks yet 😅 <span class="text-gray-400 font-semibold"> Add a task</span> to get started...
-      </p>
+  class="mt-5 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 px-4 py-10 text-center text-sm font-medium text-slate-500">
+  All clear for now! 🌱
+  <span class="font-semibold text-indigo-500">Add a task</span>
+  to get moving!
+</p>
 
+      <!-- Task list (items rendered by index.js) -->
       <ul class="py-5 flex flex-col gap-3" id="todo-list">
         <!-- <li data-id="1" class="flex gap-2 border border-slate-300 p-4 rounded-xl">
   <input type="checkbox" data-id="1">
