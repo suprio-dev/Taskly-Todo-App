@@ -85,9 +85,9 @@ todoForm.addEventListener("submit", (e) => {
     });
 
     editTodoId = null;
-    formBtn.textContent = "Add";
+    formBtn.textContent = "Add task";
     todoInput.value = "";
-    formBtn.className = "px-7 text-white py-4 bg-emerald-500 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
+    formBtn.className = "primary-btn px-5 py-3.5 text-sm font-bold cursor-pointer";
     cancelEdit.className = "hidden";
     renderTodo();
     taskCompletionBar();
@@ -286,10 +286,11 @@ todoList.addEventListener("click", (e) => {
       todo => todo.id === Number(id)
     );
 
-    let originalTodoValue = todoInput.value;
+    // let originalTodoValue = todoInput.value;
     todoInput.value = currentTodo.text;
 
     formBtn.textContent = "Update";
+    cancelEdit.dataset.action = "cancel";
     cancelEdit.className = "text-sm text-gray-500 mt-2 transition-all duration-300 active:translate-y-1 font-medium";
     cancelEdit.classList.remove("hidden");
     formBtn.className = "bg-orange-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-3s active:translate-y-1 active:shadow-sm tracking-wide";
@@ -304,12 +305,14 @@ todoList.addEventListener("click", (e) => {
     taskCompletionBar();
   })
 
+  // CANCEL EDIT function
+
   function CANCEL() {
-    todoInput.value = originalTodoValue;
+    editTodoId = null;
     cancelEdit.classList.add("hidden");
-    formBtn.textContent = "Add";
+    formBtn.textContent = "Add task";
     todoInput.value = "";
-    formBtn.className = "px-7 text-white py-4 bg-emerald-500 rounded-md transition-all duration-3s active:translate-y-1 active:shadow-sm font-semibold tracking-wide";
+    formBtn.className = "primary-btn px-5 py-3.5 text-sm font-bold cursor-pointer";
     localStorage.setItem("todos", JSON.stringify(todos));
   }
 
@@ -388,3 +391,5 @@ function taskCompletionBar() {
   }
 
 }
+
+

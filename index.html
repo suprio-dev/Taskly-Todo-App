@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <style>
     /* ---------- Tokens: light ---------- */
@@ -69,7 +72,9 @@
       --mono-fill: linear-gradient(90deg, #8c84ff, #b08cff 55%, #4fe0b6);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -84,14 +89,26 @@
       transition: background-color .3s ease, color .3s ease;
     }
 
-    h1, h2, .display, #task-count, #complete-count, #progress-text {
+    h1,
+    h2,
+    .display,
+    #task-count,
+    #complete-count,
+    #progress-text {
       font-family: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
     }
 
-    button, input { font: inherit; }
-    button { -webkit-tap-highlight-color: transparent; }
+    button,
+    input {
+      font: inherit;
+    }
 
-    button:focus-visible, input:focus-visible {
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    input:focus-visible {
       outline: 3px solid var(--accent);
       outline-offset: 3px;
     }
@@ -107,8 +124,15 @@
     }
 
     @keyframes shell-in {
-      from { opacity: 0; transform: translateY(14px) scale(.99); }
-      to   { opacity: 1; transform: none; }
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(.99);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     /* ---------- Header ---------- */
@@ -139,10 +163,10 @@
       position: absolute;
       z-index: -1;
       inset: 0;
-      background-image: radial-gradient(rgba(255,255,255,.16) 1px, transparent 1.2px);
+      background-image: radial-gradient(rgba(255, 255, 255, .16) 1px, transparent 1.2px);
       background-size: 18px 18px;
       -webkit-mask-image: linear-gradient(100deg, transparent 35%, #000);
-              mask-image: linear-gradient(100deg, transparent 35%, #000);
+      mask-image: linear-gradient(100deg, transparent 35%, #000);
     }
 
     .app-heading {
@@ -153,18 +177,31 @@
     }
 
     .theme-toggle {
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(255, 255, 255, .14);
+      border: 1px solid rgba(255, 255, 255, .28);
       -webkit-backdrop-filter: blur(14px);
       backdrop-filter: blur(14px);
       border-radius: 999px;
       transition: background .2s ease, transform .2s ease;
     }
-    .theme-toggle:hover { background: rgba(255,255,255,.26); }
-    .theme-toggle:active { transform: scale(.95); }
 
-    .theme-icon { width: 18px; height: 18px; flex-shrink: 0; }
-    .theme-icon.hidden { display: none; }
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, .26);
+    }
+
+    .theme-toggle:active {
+      transform: scale(.95);
+    }
+
+    .theme-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .theme-icon.hidden {
+      display: none;
+    }
 
     /* ---------- Form ---------- */
     .task-input {
@@ -174,7 +211,12 @@
       border-radius: 16px;
       transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
     }
-    .task-input::placeholder { color: var(--muted); font-weight: 500; }
+
+    .task-input::placeholder {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
     .task-input:focus {
       background: var(--surface);
       border-color: var(--accent);
@@ -189,22 +231,35 @@
       color: #fff;
       transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
     }
-    body.dark-mode .primary-btn { color: #120f3a; }
+
+    body.dark-mode .primary-btn {
+      color: #120f3a;
+    }
+
     .primary-btn:hover {
       transform: translateY(-1px);
       filter: brightness(1.06);
       box-shadow: 0 12px 26px -8px color-mix(in srgb, var(--accent) 80%, transparent);
     }
-    .primary-btn:active { transform: translateY(0) scale(.98); }
+
+    .primary-btn:active {
+      transform: translateY(0) scale(.98);
+    }
 
     .cancel-btn {
       color: var(--muted);
       border-radius: 10px;
       transition: color .2s ease, background .2s ease;
     }
-    .cancel-btn:hover { color: var(--danger); background: var(--surface-hover); }
 
-    #errorMsg { color: var(--danger); }
+    .cancel-btn:hover {
+      color: var(--danger);
+      background: var(--surface-hover);
+    }
+
+    #errorMsg {
+      color: var(--danger);
+    }
 
     /* ---------- Stats ---------- */
     .stat-card {
@@ -212,8 +267,17 @@
       border: 1px solid var(--border);
       border-radius: 20px;
     }
-    .stat-label { color: var(--muted); font-weight: 700; }
-    #task-count, #complete-count { font-weight: 700; letter-spacing: -.02em; }
+
+    .stat-label {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    #task-count,
+    #complete-count {
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
 
     /* ---------- Progress ---------- */
     .progress-card {
@@ -221,16 +285,22 @@
       border: 1px solid var(--border);
       border-radius: 20px;
     }
+
     .progress-track {
       background: var(--track);
       box-shadow: inset 0 1px 2px rgba(0, 0, 0, .08);
     }
+
     .progress-fill {
       background: var(--mono-fill);
       box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 55%, transparent);
       transition: width .5s cubic-bezier(.3, .8, .3, 1);
     }
-    #progress-message { color: var(--muted); }
+
+    #progress-message {
+      color: var(--muted);
+    }
+
     #progress-text {
       color: var(--accent);
       font-weight: 800;
@@ -243,6 +313,7 @@
       border: 1.5px dashed var(--border-strong);
       border-radius: 22px;
     }
+
     .empty-icon {
       display: grid;
       width: 56px;
@@ -255,9 +326,13 @@
     }
 
     /* ---------- Task list ---------- */
-    #todo-list { list-style: none; margin: 0; padding: 0; }
+    #todo-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
 
-    #todo-list > li {
+    #todo-list>li {
       position: relative;
       display: flex;
       align-items: center;
@@ -272,7 +347,7 @@
       transition: background .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
     }
 
-    #todo-list > li::before {
+    #todo-list>li::before {
       content: "";
       position: absolute;
       left: 0;
@@ -285,14 +360,19 @@
       transition: background .2s ease, opacity .2s ease;
     }
 
-    #todo-list > li:hover {
+    #todo-list>li:hover {
       border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
       transform: translateY(-1px);
       box-shadow: 0 10px 24px -14px color-mix(in srgb, var(--accent) 60%, transparent);
     }
 
-    #todo-list > li:has(input:checked) { background: var(--surface-soft); }
-    #todo-list > li:has(input:checked)::before { background: var(--success); }
+    #todo-list>li:has(input:checked) {
+      background: var(--surface-soft);
+    }
+
+    #todo-list>li:has(input:checked)::before {
+      background: var(--success);
+    }
 
     /* custom checkbox */
     #todo-list input[type="checkbox"] {
@@ -310,8 +390,15 @@
       cursor: pointer;
       transition: background .2s ease, border-color .2s ease, transform .15s ease;
     }
-    #todo-list input[type="checkbox"]:hover { border-color: var(--accent); }
-    #todo-list input[type="checkbox"]:active { transform: scale(.9); }
+
+    #todo-list input[type="checkbox"]:hover {
+      border-color: var(--accent);
+    }
+
+    #todo-list input[type="checkbox"]:active {
+      transform: scale(.9);
+    }
+
     #todo-list input[type="checkbox"]::after {
       content: "";
       width: 11px;
@@ -321,16 +408,21 @@
       transform: translateY(-1px) rotate(-45deg) scale(0);
       transition: transform .18s cubic-bezier(.3, 1.6, .5, 1);
     }
+
     #todo-list input[type="checkbox"]:checked {
       background: linear-gradient(135deg, var(--success), color-mix(in srgb, var(--success) 70%, var(--accent)));
       border-color: transparent;
     }
+
     #todo-list input[type="checkbox"]:checked::after {
       transform: translateY(-1px) rotate(-45deg) scale(1);
     }
-    body.dark-mode #todo-list input[type="checkbox"]::after { border-color: #06241b; }
 
-    #todo-list > li p {
+    body.dark-mode #todo-list input[type="checkbox"]::after {
+      border-color: #06241b;
+    }
+
+    #todo-list>li p {
       flex: 1;
       min-width: 0;
       margin: 0;
@@ -341,16 +433,17 @@
       overflow-wrap: anywhere;
       transition: color .2s ease;
     }
-    #todo-list > li:has(input:checked) p {
+
+    #todo-list>li:has(input:checked) p {
       color: var(--muted);
       text-decoration: line-through;
       text-decoration-thickness: 1.5px;
     }
 
     /* timestamps / meta text that your JS may add */
-    #todo-list > li small,
-    #todo-list > li time,
-    #todo-list > li span {
+    #todo-list>li small,
+    #todo-list>li time,
+    #todo-list>li span {
       color: var(--muted);
       font-size: 11px;
       font-weight: 500;
@@ -366,70 +459,117 @@
       transition: background .2s ease, color .2s ease, transform .15s ease;
     }
 
-    
-    #todo-list li button:active { transform: scale(.94); }
 
-    #todo-list li button:first-of-type { color: var(--accent); background: var(--accent-soft); }
-    #todo-list li button:first-of-type:hover { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+    #todo-list li button:active {
+      transform: scale(.94);
+    }
 
-    #todo-list li button:last-of-type { color: var(--danger); background: color-mix(in srgb, var(--danger) 10%, transparent); }
-    #todo-list li button:last-of-type:hover { background: color-mix(in srgb, var(--danger) 20%, transparent); }
+    #todo-list li button:first-of-type {
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    #todo-list li button:first-of-type:hover {
+      background: color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+
+    #todo-list li button:last-of-type {
+      color: var(--danger);
+      background: color-mix(in srgb, var(--danger) 10%, transparent);
+    }
+
+    #todo-list li button:last-of-type:hover {
+      background: color-mix(in srgb, var(--danger) 20%, transparent);
+    }
 
     /* ---------- Footer ---------- */
-    .app-footer { color: var(--muted); border-top: 1px solid var(--border); }
+    .app-footer {
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
 
     /* ---------- Mobile ---------- */
     @media (max-width: 480px) {
-      .page-wrap { padding-inline: 4px; }
-      .app-content { padding: 18px; }
-      #todo-form { gap: 8px; }
-      .form-actions button:first-child { padding-inline: 15px; }
-      #todo-list > li { gap: 10px; padding: 12px 10px 12px 14px; }
-      #todo-list li button { padding: 8px 9px; }
+      .page-wrap {
+        padding-inline: 4px;
+      }
+
+      .app-content {
+        padding: 18px;
+      }
+
+      #todo-form {
+        gap: 8px;
+      }
+
+      .form-actions button:first-child {
+        padding-inline: 15px;
+      }
+
+      #todo-list>li {
+        gap: 10px;
+        padding: 12px 10px 12px 14px;
+      }
+
+      #todo-list li button {
+        padding: 8px 9px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+
+      *,
+      *::before,
+      *::after {
         transition-duration: .01ms !important;
         animation-duration: .01ms !important;
         scroll-behavior: auto !important;
       }
     }
 
-.clear-btn {
-  padding: 14px 16px;
-  border: 1.5px dashed color-mix(in srgb, var(--danger) 45%, var(--border));
-  border-radius: 16px;
-  background: transparent;
-  color: var(--danger);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background .2s ease, border-color .2s ease, color .2s ease, transform .15s ease;
-}
-.clear-btn:hover {
-  background: color-mix(in srgb, var(--danger) 12%, transparent);
-  border-color: var(--danger);
-}
-.clear-btn:active { transform: scale(.95); }
-.clear-btn:focus-visible { outline-color: var(--danger); }
+    .clear-btn {
+      padding: 14px 16px;
+      border: 1.5px dashed color-mix(in srgb, var(--danger) 45%, var(--border));
+      border-radius: 16px;
+      background: transparent;
+      color: var(--danger);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s ease, border-color .2s ease, color .2s ease, transform .15s ease;
+    }
 
-/* Small pill version, sits in the task list header */
-.clear-btn-sm {
-  padding: 6px 12px;
-  border-radius: 999px;
-  border-style: solid;
-  font-size: 12px;
-}
+    .clear-btn:hover {
+      background: color-mix(in srgb, var(--danger) 12%, transparent);
+      border-color: var(--danger);
+    }
 
-/* "Sure?" confirm state (optional) */
-.clear-btn.confirming {
-  background: var(--danger);
-  border-color: var(--danger);
-  color: #fff;
-}
-body.dark-mode .clear-btn.confirming { color: #3a0713; }
+    .clear-btn:active {
+      transform: scale(.95);
+    }
 
+    .clear-btn:focus-visible {
+      outline-color: var(--danger);
+    }
+
+    /* Small pill version, sits in the task list header */
+    .clear-btn-sm {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border-style: solid;
+      font-size: 12px;
+    }
+
+    /* "Sure?" confirm state (optional) */
+    .clear-btn.confirming {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #fff;
+    }
+
+    body.dark-mode .clear-btn.confirming {
+      color: #3a0713;
+    }
   </style>
 </head>
 
@@ -457,20 +597,20 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
           </div>
 
           <!-- JS: theme-toggle -->
-          <button
-            id="theme-toggle"
-            type="button"
-            aria-label="Toggle dark mode"
-            aria-pressed="false"
+          <button id="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false"
             class="theme-toggle flex shrink-0 items-center gap-2 px-3.5 py-2.5 text-white cursor-pointer">
 
-            <svg id="moon-icon" class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+            <svg id="moon-icon" class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />
             </svg>
 
-            <svg id="sun-icon" class="theme-icon hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-              <circle cx="12" cy="12" r="4"/>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>
+            <svg id="sun-icon" class="theme-icon hidden" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <circle cx="12" cy="12" r="4" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
             </svg>
 
             <span id="theme-label" class="text-xs font-bold">Dark</span>
@@ -495,34 +635,26 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
           <form id="todo-form" action="" class="flex items-start gap-3">
 
             <div class="min-w-0 flex-1">
-              <input
-                id="todo-input"
-                type="text"
-                autocomplete="off"
-                placeholder="Write a task..."
-                aria-label="New task"
+              <input id="todo-input" type="text" autocomplete="off" placeholder="Write a task..." aria-label="New task"
                 class="task-input w-full px-4 py-3.5 text-sm font-medium">
 
               <p id="errorMsg" class="mt-2 ml-1 hidden items-center gap-1.5 text-xs font-semibold">
                 <svg class="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-4a1 1 0 00-1 1v3a1 1 0 002 0V7a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                  <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-4a1 1 0 00-1 1v3a1 1 0 002 0V7a1 1 0 00-1-1zm0 8a1 1 0 100-2 1 1 0 000 2z"
+                    clip-rule="evenodd" />
                 </svg>
                 <span id="errorText">Oops! Write something first</span>
               </p>
             </div>
 
             <div class="form-actions flex shrink-0 flex-col gap-2">
-              <button
-                id="form-btn"
-                type="submit"
-                class="primary-btn px-5 py-3.5 text-sm font-bold cursor-pointer">
+              <button id="form-btn" type="submit" class="primary-btn px-5 py-3.5 text-sm font-bold cursor-pointer">
                 Add task
               </button>
 
-              <button
-                id="cancel-edit"
-                type="button"
-                class="cancel-btn px-2 py-1.5 text-xs font-bold cursor-pointer">
+              <button id="cancel-edit" type="button" class="cancel-btn px-2 py-1.5 text-xs font-bold cursor-pointer"
+                data-action="cancel">
                 Cancel edit
               </button>
             </div>
@@ -535,9 +667,11 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
 
           <div class="stat-card p-4">
             <div class="flex items-center gap-2">
-              <span class="grid h-8 w-8 place-items-center rounded-xl" style="background:var(--accent-soft);color:var(--accent)">
+              <span class="grid h-8 w-8 place-items-center rounded-xl"
+                style="background:var(--accent-soft);color:var(--accent)">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
                 </svg>
               </span>
               <span class="stat-label text-xs">Your tasks</span>
@@ -549,9 +683,10 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
 
           <div class="stat-card p-4">
             <div class="flex items-center gap-2">
-              <span class="grid h-8 w-8 place-items-center rounded-xl" style="background:color-mix(in srgb, var(--success) 14%, transparent);color:var(--success)">
+              <span class="grid h-8 w-8 place-items-center rounded-xl"
+                style="background:color-mix(in srgb, var(--success) 14%, transparent);color:var(--success)">
                 <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="m5 12 4 4L19 6"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m5 12 4 4L19 6" />
                 </svg>
               </span>
               <span class="stat-label text-xs">Completed</span>
@@ -575,14 +710,8 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
             <p id="progress-text" class="text-3xl tracking-tight">0%</p>
           </div>
 
-          <div
-            id="progress-bar-container"
-            role="progressbar"
-            aria-label="Task completion progress"
-            aria-valuemin="0"
-            aria-valuemax="100"
-            aria-valuenow="0"
-            class="progress-track h-3 w-full overflow-hidden rounded-full">
+          <div id="progress-bar-container" role="progressbar" aria-label="Task completion progress" aria-valuemin="0"
+            aria-valuemax="100" aria-valuenow="0" class="progress-track h-3 w-full overflow-hidden rounded-full">
 
             <div id="progress-bar" class="progress-fill h-full w-0 rounded-full"></div>
           </div>
@@ -602,20 +731,19 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
             </div>
 
             <div class="flex items-center gap-2">
-              <button
-                id="clear-all"
-                type="button"
-                aria-label="Clear all tasks"
-                class="clear-btn clear-btn-sm hidden">
+              <button id="clear-all" type="button" aria-label="Clear all tasks" class="clear-btn clear-btn-sm hidden">
                 <span class="flex items-center justify-center gap-1.5">
-                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6m4 5v6m4-6v6"/>
+                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6m4 5v6m4-6v6" />
                   </svg>
                   <span id="clear-all-text">Clear all</span>
                 </span>
               </button>
 
-              <span class="rounded-full px-3 py-1.5 text-xs font-bold" style="background:var(--accent-soft);color:var(--accent)">
+              <span class="rounded-full px-3 py-1.5 text-xs font-bold"
+                style="background:var(--accent-soft);color:var(--accent)">
                 My list
               </span>
             </div>
@@ -625,7 +753,8 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
           <div id="empty-todo" class="empty-state px-5 py-9 text-center">
             <div class="empty-icon">
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
               </svg>
             </div>
 
@@ -660,4 +789,5 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
 
   <script src="index.js"></script>
 </body>
+
 </html>
