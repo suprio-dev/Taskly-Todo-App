@@ -11,10 +11,56 @@ const cancelEdit = document.querySelector("#cancel-edit");
 const progressText = document.querySelector("#progress-text");
 const progressBar = document.querySelector("#progress-bar");
 const progressMessage = document.querySelector("#progress-message");
+const errorMsg = document.querySelector("#errorMsg");
+const themeToggle = document.querySelector("#theme-toggle");
+const sunIcon = document.querySelector("#sun-icon");
+const moonIcon = document.querySelector("#moon-icon");
+const themeLabel = document.querySelector("#theme-label");
+const clearAll = document.querySelector("#clear-all");
 let hours, minutes, am_pm;
-
+let counter = 0;
 let editTodoId = null;
 cancelEdit.className = "hidden";
+
+
+themeToggle.addEventListener('click', (e) => {
+  counter++;
+  document.querySelector("body").classList.toggle("dark-mode");
+  if (counter % 2 !== 0) {
+    sunIcon.classList.remove("hidden");
+    moonIcon.classList.add("hidden");
+    themeLabel.textContent = `Light`;
+  } else {
+    moonIcon.classList.remove("hidden");
+    sunIcon.classList.add("hidden");
+    themeLabel.textContent = `Dark`;
+  }
+
+
+})
+
+
+clearAll.addEventListener('click', (e) => {
+  todos = [];
+  todoList.innerHTML="";
+  emptyTodo.classList.remove("hidden");
+  emptyTodo.innerHTML = `<div class="empty-icon">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+              </svg>
+            </div>
+
+            <p class="display mt-4 text-base font-bold">A little space for big plans</p>
+            <p class="mx-auto mt-2 max-w-[240px] text-sm leading-relaxed" style="color:var(--muted)">
+              Your list is empty. Add your first task and get the ball rolling.
+            </p>`;
+  localStorage.setItem("todos", JSON.stringify(todos));
+  clearAll.classList.add("hidden");
+})
+
+
+
+
 
 todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -22,9 +68,13 @@ todoForm.addEventListener("submit", (e) => {
   const todoValue = todoInput.value.trim();
 
   if (!todoValue) {
+    errorMsg.classList.remove("hidden");
+    errorMsg.classList.add("flex");
     return
   }
 
+  errorMsg.classList.remove("flex");
+  errorMsg.classList.add("hidden");
 
   // EDITING
 
@@ -109,7 +159,7 @@ todoForm.addEventListener("submit", (e) => {
       current_month: current_month,
       current_day: current_day,
       current_year: current_year,
-      am_pm:am_pm
+      am_pm: am_pm
     };
 
     todos.push(newTodo);
@@ -132,9 +182,16 @@ function renderTodo() {
     emptyTodo.className = "hidden";
   else if (todos.length === 0) {
     emptyTodo.className = "mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-400 font-semibold";
-    emptyTodo.innerHTML = `All clear for now! 🌱
-  <span class="font-semibold text-indigo-500">Add a task</span>
-  to get moving!`;
+    emptyTodo.innerHTML = ` <div class="empty-icon">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+              </svg>
+            </div>
+
+            <p class="display mt-4 text-base font-bold">A little space for big plans</p>
+            <p class="mx-auto mt-2 max-w-[240px] text-sm leading-relaxed" style="color:var(--muted)">
+              Your list is empty. Add your first task and get the ball rolling.
+            </p>`;
   }
   todos.forEach(function (todo) {
     addTodo(todo);
@@ -143,7 +200,7 @@ function renderTodo() {
 
 
 function addTodo(todo) {
-
+  clearAll.classList.remove("hidden");
   const li = document.createElement("li");
 
   li.dataset.id = todo.id;
@@ -194,8 +251,8 @@ function addTodo(todo) {
 
   todoList.append(li);
   localStorage.setItem("todos", JSON.stringify(todos));
-  taskCount.textContent = `TASKS (${todos.length})`
-  completeCount.textContent = `COMPLETED : ${todos.filter((todo) => todo.isCompleted).length}`
+  taskCount.textContent = `Goals (${todos.length})`
+  completeCount.textContent = `Wins : ${todos.filter((todo) => todo.isCompleted).length}`
 
 
 
