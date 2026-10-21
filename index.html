@@ -414,6 +414,14 @@
 .clear-btn:active { transform: scale(.95); }
 .clear-btn:focus-visible { outline-color: var(--danger); }
 
+/* Small pill version, sits in the task list header */
+.clear-btn-sm {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border-style: solid;
+  font-size: 12px;
+}
+
 /* "Sure?" confirm state (optional) */
 .clear-btn.confirming {
   background: var(--danger);
@@ -535,7 +543,7 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
               <span class="stat-label text-xs">Your tasks</span>
             </div>
 
-            <p id="task-count" class="mt-4 text-xl">TASKS (0)</p>
+            <p id="task-count" class="mt-4 text-xl">Goals (0)</p>
             <p class="mt-1 text-xs" style="color:var(--muted)">Things on your list</p>
           </div>
 
@@ -549,7 +557,7 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
               <span class="stat-label text-xs">Completed</span>
             </div>
 
-            <p id="complete-count" class="mt-4 text-xl">COMPLETED : 0</p>
+            <p id="complete-count" class="mt-4 text-xl">Wins : 0</p>
             <p class="mt-1 text-xs" style="color:var(--muted)">Wins for today</p>
           </div>
 
@@ -593,9 +601,24 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
               <p class="mt-1 text-sm" style="color:var(--muted)">One thing at a time.</p>
             </div>
 
-            <span class="rounded-full px-3 py-1.5 text-xs font-bold" style="background:var(--accent-soft);color:var(--accent)">
-              My list
-            </span>
+            <div class="flex items-center gap-2">
+              <button
+                id="clear-all"
+                type="button"
+                aria-label="Clear all tasks"
+                class="clear-btn clear-btn-sm hidden">
+                <span class="flex items-center justify-center gap-1.5">
+                  <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6m4 5v6m4-6v6"/>
+                  </svg>
+                  <span id="clear-all-text">Clear all</span>
+                </span>
+              </button>
+
+              <span class="rounded-full px-3 py-1.5 text-xs font-bold" style="background:var(--accent-soft);color:var(--accent)">
+                My list
+              </span>
+            </div>
           </div>
 
           <!-- Empty state: JS can toggle hidden -->
@@ -614,18 +637,6 @@ body.dark-mode .clear-btn.confirming { color: #3a0713; }
 
           <ul id="todo-list" class="flex flex-col gap-3 py-1">
           </ul>
-<button
-  id="clear-all"
-  type="button"
-  aria-label="Clear all tasks"
-  class="clear-btn mt-4 w-full hidden">
-  <span class="flex items-center justify-center gap-2">
-    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0-1 14a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1L6 6m4 5v6m4-6v6"/>
-    </svg>
-    <span id="clear-all-text">Clear all</span>
-  </span>
-</button>
         </section>
 
       </div>

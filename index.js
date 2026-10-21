@@ -42,20 +42,12 @@ themeToggle.addEventListener('click', (e) => {
 
 clearAll.addEventListener('click', (e) => {
   todos = [];
-  todoList.innerHTML="";
-  emptyTodo.classList.remove("hidden");
-  emptyTodo.innerHTML = `<div class="empty-icon">
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
-              </svg>
-            </div>
-
-            <p class="display mt-4 text-base font-bold">A little space for big plans</p>
-            <p class="mx-auto mt-2 max-w-[240px] text-sm leading-relaxed" style="color:var(--muted)">
-              Your list is empty. Add your first task and get the ball rolling.
-            </p>`;
   localStorage.setItem("todos", JSON.stringify(todos));
-  clearAll.classList.add("hidden");
+
+  renderTodo();
+  addTodo(0);
+  taskCompletionBar();
+
 })
 
 
@@ -181,8 +173,10 @@ function renderTodo() {
   if (todos.length != 0)
     emptyTodo.className = "hidden";
   else if (todos.length === 0) {
-    emptyTodo.className = "mt-5 text-center text-gray-400 text-sm py-10 px-4 bg-gray-50 rounded-xl border border-dashed border-gray-400 font-semibold";
-    emptyTodo.innerHTML = ` <div class="empty-icon">
+    emptyTodo.classList.remove("hidden");
+    clearAll.classList.add("hidden");
+    emptyTodo.classList.add("empty-state", "px-5", "py-9", "text-center");
+    emptyTodo.innerHTML = `<div class="empty-icon">
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
               </svg>
@@ -200,18 +194,23 @@ function renderTodo() {
 
 
 function addTodo(todo) {
-  clearAll.classList.remove("hidden");
-  const li = document.createElement("li");
+  if (todo === 0) {
+    taskCount.textContent = `Goals (0)`
+    completeCount.textContent = `Wins : 0`
+  } else {
 
-  li.dataset.id = todo.id;
+    clearAll.classList.remove("hidden");
+    const li = document.createElement("li");
 
-  li.className =
-    `flex gap-2 border border-slate-300 p-4 rounded-xl hover:translate-y-1 transition-all duration-200`;
+    li.dataset.id = todo.id;
+
+    li.className =
+      `flex gap-2 border border-slate-300 p-4 rounded-xl hover:translate-y-1 transition-all duration-200`;
 
 
 
 
-  li.innerHTML = `
+    li.innerHTML = `
   <div class="flex items-center gap-3 flex-1">
     <input
       type="checkbox"
@@ -249,11 +248,13 @@ function addTodo(todo) {
   </div>
 `;
 
-  todoList.append(li);
-  localStorage.setItem("todos", JSON.stringify(todos));
-  taskCount.textContent = `Goals (${todos.length})`
-  completeCount.textContent = `Wins : ${todos.filter((todo) => todo.isCompleted).length}`
+    todoList.append(li);
+    localStorage.setItem("todos", JSON.stringify(todos));
+    taskCount.textContent = `Goals (${todos.length})`
+    completeCount.textContent = `Wins : ${todos.filter((todo) => todo.isCompleted).length}`
 
+
+  }
 
 
 }
@@ -354,8 +355,8 @@ function deleteTodo(id) {
     emptyTodo.classList.add("hidden");
   else
     emptyTodo.classList.remove("hidden");
-  taskCount.textContent = `TASKS (0)`
-  completeCount.textContent = `COMPLETED : 0`
+  taskCount.textContent = `Goals (0)`
+  completeCount.textContent = `Wins : 0`
 
   localStorage.setItem("todos", JSON.stringify(todos));
   renderTodo();
@@ -366,7 +367,7 @@ function deleteTodo(id) {
 
 function taskCompletionBar() {
   if (todos.length === 0) {
-    progressText.textContent = `0.0%`;
+    progressText.textContent = `0%`;
     progressBar.style.width = `0%`;
     progressMessage.textContent = `Let's get started! Complete your first task ✨`;
   } else {
@@ -376,7 +377,7 @@ function taskCompletionBar() {
         counter++;
       }
     }
-    progressText.textContent = `${(counter / (todos.length) * 100).toFixed(1)}%`;
+    progressText.textContent = `${(counter / (todos.length) * 100).toFixed(0)}%`;
     progressBar.style.width = `${counter / (todos.length) * 100}%`;
     if (todos.length - counter === 0)
       progressMessage.textContent = `All tasks completed ✨`;
