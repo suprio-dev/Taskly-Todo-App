@@ -637,6 +637,86 @@
             <div class="min-w-0 flex-1">
               <input id="todo-input" type="text" autocomplete="off" placeholder="Write a task..." aria-label="New task"
                 class="task-input w-full px-4 py-3.5 text-sm font-medium">
+              <!-- Task Category -->
+              <div class="mb-3 mt-3">
+                <label for="todo-category" class="mb-2 block text-xs font-bold" style="color: var(--muted)">
+                  <span class="mr-1">🏷️</span> Task category
+                </label>
+
+                <div class="relative">
+                  <select id="todo-category" name="category" class="w-full appearance-none rounded-2xl border
+             px-4 py-3.5 pr-11 text-sm font-semibold
+             outline-none cursor-pointer
+             transition-all duration-200
+             focus:border-(--accent)
+             focus:ring-4 focus:ring-indigo-500/10" style="
+        background: var(--surface-soft);
+        color: var(--text);
+        border-color: var(--border);
+      ">
+
+                    <option value="👤 Personal">👤 Personal</option>
+                    <option value="📚 Study &amp; Learning">📚 Study &amp; Learning</option>
+                    <option value="💻 Work &amp; Projects">💻 Work &amp; Projects</option>
+                    <option value="💪 Health &amp; Fitness">💪 Health &amp; Fitness</option>
+                    <option value="🛍️ Shopping">🛍️ Shopping</option>
+                    <option value="✨ Other">✨ Other</option>
+
+                  </select>
+
+                  <!-- Dropdown arrow -->
+                  <div class="pointer-events-none absolute inset-y-0 right-4
+             flex items-center" style="color: var(--muted)">
+
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+                    </svg>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- Priority Checkbox -->
+              <label for="todo-priority" class="group flex items-center gap-3 rounded-xl
+         border border-amber-500/20
+         bg-amber-500/[0.04] px-3.5 py-3
+         cursor-pointer transition-all duration-200
+         hover:border-amber-500/40
+         hover:bg-amber-500/[0.08]">
+                <input type="checkbox" id="todo-priority" name="priority" class="peer sr-only">
+
+                <!-- Custom Checkbox -->
+                <span class="flex h-5 w-5 shrink-0 items-center justify-center
+           rounded-md border-2 border-slate-300
+           text-transparent transition-all duration-200
+           peer-checked:border-amber-500
+           peer-checked:bg-amber-500
+           peer-checked:text-white
+           peer-focus-visible:ring-4
+           peer-focus-visible:ring-amber-500/20">
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="m4 10 4 4 8-8" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+
+                <!-- Label Text -->
+                <span class="flex-1 min-w-0">
+                  <span class="block text-sm font-semibold" style="color: var(--text)">
+                    Prioritize this task
+                  </span>
+                  <span class="mt-0.5 block text-xs" style="color: var(--muted)">
+                    Mark this as one of today's priorities
+                  </span>
+                </span>
+
+                <!-- Star Icon -->
+                <svg class="h-5 w-5 shrink-0 text-amber-500
+           transition-transform duration-200
+           group-hover:scale-110" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </label>
 
               <p id="errorMsg" class="mt-2 ml-1 hidden items-center gap-1.5 text-xs font-semibold">
                 <svg class="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">

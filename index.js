@@ -17,6 +17,8 @@ const sunIcon = document.querySelector("#sun-icon");
 const moonIcon = document.querySelector("#moon-icon");
 const themeLabel = document.querySelector("#theme-label");
 const clearAll = document.querySelector("#clear-all");
+const todoCategory = document.querySelector("#todo-category");
+const todoPriority = document.querySelector("#todo-priority");
 let hours, minutes, am_pm;
 let counter = 0;
 let editTodoId = null;
@@ -58,6 +60,8 @@ todoForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const todoValue = todoInput.value.trim();
+  const category = todoCategory.value;
+  const priority = todoPriority.checked;
 
   if (!todoValue) {
     errorMsg.classList.remove("hidden");
@@ -151,7 +155,9 @@ todoForm.addEventListener("submit", (e) => {
       current_month: current_month,
       current_day: current_day,
       current_year: current_year,
-      am_pm: am_pm
+      am_pm: am_pm,
+      category: category,
+      priority: priority
     };
 
     todos.push(newTodo);
@@ -209,44 +215,203 @@ function addTodo(todo) {
 
 
 
+    if (todo.priority === true) {
+      li.innerHTML = `
+  <div class="flex items-start gap-3 w-full min-w-0">
 
-    li.innerHTML = `
-  <div class="flex items-center gap-3 flex-1">
-    <input
-      type="checkbox"
-      data-id="${todo.id}"
-      ${todo.isCompleted === true ? "checked" : ""}
-      class="appearance-none w-3 h-3 shrink-0 border-2 border-gray-300 rounded-full checked:bg-indigo-500 checked:border-indigo-500 focus:outline-none transition-all duration-200"
-    >
+    <!-- Checkbox -->
+    <div class="pt-1 shrink-0">
+      <input
+        type="checkbox"
+        data-id="${todo.id}"
+        ${todo.isCompleted === true ? "checked" : ""}
+        class="appearance-none w-4 h-4 border-2 border-gray-300
+               rounded-full checked:bg-indigo-500
+               checked:border-indigo-500 focus:outline-none
+               transition-all duration-200 cursor-pointer"
+      >
+    </div>
 
-    <div class="flex-1 min-w-0">
-      <p class="${todo.isCompleted === true ? "line-through text-slate-600 opacity-60 font-semibold" : ""}">
+    <!-- Main Content -->
+    <div class="flex-1 min-w-0 flex flex-col">
+
+      
+<!-- Category + Priority Star -->
+<div class="mb-2 flex items-center justify-between gap-3">
+
+  <!-- Category Badge -->
+  <span class="inline-flex items-center gap-1.5
+               rounded-md border border-indigo-500/20
+               bg-indigo-500/10 px-2 py-1
+               text-[10px] font-bold uppercase
+               tracking-wider text-indigo-500">
+    <i class="fa-solid fa-tag"></i>
+    ${todo.category}
+  </span>
+
+<!-- Priority Star -->
+  <span
+    title="Priority task"
+    class="inline-flex h-7 w-7 shrink-0 items-center
+           justify-center">
+
+    <i class="text-lg">&starf;</i>
+  </span>
+
+</div>
+
+
+      <!-- Task Title -->
+      <p class="text-sm font-semibold leading-5 break-words
+        ${todo.isCompleted === true
+          ? "line-through text-slate-500 opacity-60"
+          : ""}">
         ${todo.text}
       </p>
 
-      <span class="mt-1 flex items-center gap-1.5 text-xs font-medium text-slate-400">
-        <i class="fa-regular fa-calendar text-indigo-400"></i>
-        <span>${todo.current_day}, ${todo.current_date} ${todo.current_month} ${todo.current_year} · ${todo.hours}:${todo.minutes} ${todo.am_pm}</span>
-      </span>
+      <!-- Date and Time -->
+      <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1
+                  text-[11px] font-medium text-slate-400">
+
+        <span class="inline-flex items-center gap-1.5">
+          <i class="fa-regular fa-calendar text-indigo-400"></i>
+        ${todo.current_day}, ${todo.current_date}
+          ${todo.current_month} ${todo.current_year}
+        </span>
+
+        <span class="inline-flex items-center gap-1.5">
+          <i class="fa-regular fa-clock text-indigo-400"></i>
+          ${todo.hours}:${todo.minutes} ${todo.am_pm}
+        </span>
+
+      </div>
     </div>
-  </div>
 
-  <div class="flex gap-2">
-    <button
-      data-action="edit"
-      data-id="${todo.id}"
-      class="bg-amber-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-300 active:translate-y-1 active:shadow-sm tracking-wide">
-      Edit
-    </button>
+    <!-- Actions -->
+    <div class="flex items-center gap-2 shrink-0">
 
-    <button
-      data-action="delete"
-      data-id="${todo.id}"
-      class="bg-red-500 opacity-80 px-3 py-1.5 rounded-lg text-white font-semibold transition-all duration-300 active:translate-y-1 active:shadow-sm tracking-wide">
-      Delete
-    </button>
+      <button
+        data-action="edit"
+        data-id="${todo.id}"
+        class="bg-amber-500 opacity-80 px-3 py-1.5
+               rounded-lg text-white font-semibold
+               transition-all duration-300
+               active:translate-y-1 active:shadow-sm
+               tracking-wide text-xs sm:text-sm">
+        Edit
+      </button>
+
+      <button
+        data-action="delete"
+        data-id="${todo.id}"
+        class="bg-red-500 opacity-80 px-3 py-1.5
+               rounded-lg text-white font-semibold
+               transition-all duration-300
+               active:translate-y-1 active:shadow-sm
+               tracking-wide text-xs sm:text-sm">
+        Delete
+      </button>
+  
+    </div>
+    
   </div>
+  
 `;
+    } else {
+      li.innerHTML = `
+  <div class="flex items-start gap-3 w-full min-w-0">
+
+    <!-- Checkbox -->
+    <div class="pt-1 shrink-0">
+      <input
+        type="checkbox"
+        data-id="${todo.id}"
+        ${todo.isCompleted === true ? "checked" : ""}
+        class="appearance-none w-4 h-4 border-2 border-gray-300
+               rounded-full checked:bg-indigo-500
+               checked:border-indigo-500 focus:outline-none
+               transition-all duration-200 cursor-pointer"
+      >
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 min-w-0 flex flex-col">
+
+      
+<!-- Category + Priority Star -->
+<div class="mb-2 flex items-center justify-between gap-3">
+
+  <!-- Category Badge -->
+  <span class="inline-flex items-center gap-1.5
+               rounded-md border border-indigo-500/20
+               bg-indigo-500/10 px-2 py-1
+               text-[10px] font-bold uppercase
+               tracking-wider text-indigo-500">
+    <i class="fa-solid fa-tag"></i>
+    ${todo.category}
+  </span>
+
+</div>
+
+
+      <!-- Task Title -->
+      <p class="text-sm font-semibold leading-5 break-words
+        ${todo.isCompleted === true
+          ? "line-through text-slate-500 opacity-60"
+          : ""}">
+        ${todo.text}
+      </p>
+
+      <!-- Date and Time -->
+      <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1
+                  text-[11px] font-medium text-slate-400">
+
+        <span class="inline-flex items-center gap-1.5">
+          <i class="fa-regular fa-calendar text-indigo-400"></i>
+        ${todo.current_day}, ${todo.current_date}
+          ${todo.current_month} ${todo.current_year}
+        </span>
+
+        <span class="inline-flex items-center gap-1.5">
+          <i class="fa-regular fa-clock text-indigo-400"></i>
+          ${todo.hours}:${todo.minutes} ${todo.am_pm}
+        </span>
+
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-2 shrink-0">
+
+      <button
+        data-action="edit"
+        data-id="${todo.id}"
+        class="bg-amber-500 opacity-80 px-3 py-1.5
+               rounded-lg text-white font-semibold
+               transition-all duration-300
+               active:translate-y-1 active:shadow-sm
+               tracking-wide text-xs sm:text-sm">
+        Edit
+      </button>
+
+      <button
+        data-action="delete"
+        data-id="${todo.id}"
+        class="bg-red-500 opacity-80 px-3 py-1.5
+               rounded-lg text-white font-semibold
+               transition-all duration-300
+               active:translate-y-1 active:shadow-sm
+               tracking-wide text-xs sm:text-sm">
+        Delete
+      </button>
+  
+    </div>
+    
+  </div>
+  
+`;
+    }
+
 
     todoList.append(li);
     localStorage.setItem("todos", JSON.stringify(todos));
