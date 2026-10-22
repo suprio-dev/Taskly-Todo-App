@@ -17,6 +17,8 @@ Taskly is a simple and interactive todo application that lets you **add, edit, u
 - Mark tasks as completed
 - Delete individual tasks
 - Clear all tasks at once
+- Categorize tasks by type
+- Set task priorities
 - Dynamic task counter
 - Completed task counter
 - Task completion progress bar with percentage

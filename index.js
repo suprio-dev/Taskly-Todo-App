@@ -61,6 +61,7 @@ todoForm.addEventListener("submit", (e) => {
 
   const todoValue = todoInput.value.trim();
   const category = todoCategory.value;
+ 
   const priority = todoPriority.checked;
 
   if (!todoValue) {
@@ -161,6 +162,8 @@ todoForm.addEventListener("submit", (e) => {
     };
 
     todos.push(newTodo);
+    todoPriority.checked=false;
+    todoCategory.value="👤 Personal";
     if (todos.length !== 0)
       emptyTodo.classList.add("hidden");
     else
@@ -317,7 +320,7 @@ function addTodo(todo) {
   </div>
   
 `;
-    } else {
+}else {
       li.innerHTML = `
   <div class="flex items-start gap-3 w-full min-w-0">
 
@@ -525,8 +528,13 @@ function deleteTodo(id) {
     emptyTodo.classList.remove("hidden");
   taskCount.textContent = `Goals (0)`
   completeCount.textContent = `Wins : 0`
-
+ cancelEdit.classList.add("hidden");
+    formBtn.textContent = "Add task";
+    todoInput.value = "";
+    formBtn.className = "primary-btn px-5 py-3.5 text-sm font-bold cursor-pointer";
+    editTodoId=null;
   localStorage.setItem("todos", JSON.stringify(todos));
+ 
   renderTodo();
   taskCompletionBar();
   console.log(todos);
