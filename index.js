@@ -44,7 +44,21 @@ themeToggle.addEventListener('click', (e) => {
 
 clearAll.addEventListener('click', (e) => {
   todos = [];
+  if (todos.length !== 0)
+    emptyTodo.classList.add("hidden");
+  else
+    emptyTodo.classList.remove("hidden");
+  taskCount.textContent = `Goals (0)`
+  completeCount.textContent = `Wins : 0`
+  cancelEdit.classList.add("hidden");
+  formBtn.textContent = "Add task";
+  todoInput.value = "";
+  formBtn.className = "primary-btn px-5 py-3.5 text-sm font-bold cursor-pointer";
+  editTodoId = null;
   localStorage.setItem("todos", JSON.stringify(todos));
+
+  todoCategory.value = "👤 Personal";
+  todoPriority.checked = false;
 
   renderTodo();
   addTodo(0);
@@ -61,7 +75,7 @@ todoForm.addEventListener("submit", (e) => {
 
   const todoValue = todoInput.value.trim();
   const category = todoCategory.value;
- 
+
   const priority = todoPriority.checked;
 
   if (!todoValue) {
@@ -82,7 +96,9 @@ todoForm.addEventListener("submit", (e) => {
       if (todo.id === Number(editTodoId)) {
         return {
           ...todo,
-          text: todoValue
+          text: todoValue,
+          category: category,
+          priority: priority
         };
       }
 
@@ -92,6 +108,8 @@ todoForm.addEventListener("submit", (e) => {
     editTodoId = null;
     formBtn.textContent = "Add task";
     todoInput.value = "";
+    todoPriority.checked = false;
+    todoCategory.value = "👤 Personal";
     formBtn.className = "primary-btn px-5 py-3.5 text-sm font-bold cursor-pointer";
     cancelEdit.className = "hidden";
     renderTodo();
@@ -162,8 +180,8 @@ todoForm.addEventListener("submit", (e) => {
     };
 
     todos.push(newTodo);
-    todoPriority.checked=false;
-    todoCategory.value="👤 Personal";
+    todoPriority.checked = false;
+    todoCategory.value = "👤 Personal";
     if (todos.length !== 0)
       emptyTodo.classList.add("hidden");
     else
@@ -320,7 +338,7 @@ function addTodo(todo) {
   </div>
   
 `;
-}else {
+    } else {
       li.innerHTML = `
   <div class="flex items-start gap-3 w-full min-w-0">
 
@@ -456,6 +474,8 @@ todoList.addEventListener("click", (e) => {
 
     // let originalTodoValue = todoInput.value;
     todoInput.value = currentTodo.text;
+    todoCategory.value = currentTodo.category;
+    todoPriority.checked = currentTodo.priority;
 
     formBtn.textContent = "Update";
     cancelEdit.dataset.action = "cancel";
@@ -528,13 +548,15 @@ function deleteTodo(id) {
     emptyTodo.classList.remove("hidden");
   taskCount.textContent = `Goals (0)`
   completeCount.textContent = `Wins : 0`
- cancelEdit.classList.add("hidden");
-    formBtn.textContent = "Add task";
-    todoInput.value = "";
-    formBtn.className = "primary-btn px-5 py-3.5 text-sm font-bold cursor-pointer";
-    editTodoId=null;
+  cancelEdit.classList.add("hidden");
+  formBtn.textContent = "Add task";
+  todoInput.value = "";
+  todoCategory.value = "👤 Personal";
+  todoPriority.checked = false;
+  formBtn.className = "primary-btn px-5 py-3.5 text-sm font-bold cursor-pointer";
+  editTodoId = null;
   localStorage.setItem("todos", JSON.stringify(todos));
- 
+
   renderTodo();
   taskCompletionBar();
   console.log(todos);
