@@ -67,7 +67,10 @@ clearAll.addEventListener('click', (e) => {
 })
 
 
-
+todoInput.addEventListener('input', (e) => {
+  errorMsg.classList.remove("flex");
+  errorMsg.classList.add("hidden");
+})
 
 
 todoForm.addEventListener("submit", (e) => {
