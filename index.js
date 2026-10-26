@@ -68,8 +68,15 @@ clearAll.addEventListener('click', (e) => {
 
 
 todoInput.addEventListener('input', (e) => {
-  errorMsg.classList.remove("flex");
+
+  if(e.target.value.trim()!==""){
+errorMsg.classList.remove("flex");
   errorMsg.classList.add("hidden");
+  }else if(e.target.value===""){
+errorMsg.classList.remove("flex");
+  errorMsg.classList.add("hidden");
+  }
+  
 })
 
 
